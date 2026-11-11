@@ -33,16 +33,13 @@ public class App {
         basket.printBasket();
 
         // 4. Получение стоимости корзины
-        System.out.println("\nСтоимость корзины: "
-                + basket.getTotalPrice());
+        System.out.println("\nСтоимость корзины: " + basket.getTotalPrice());
 
         // 5. Поиск существующего продукта
-        System.out.println("\nЕсть ли телефон? "
-                + basket.containsProduct("Телефон"));
+        System.out.println("\nЕсть ли телефон? " + basket.containsProduct("Телефон"));
 
         // 6. Поиск отсутствующего продукта
-        System.out.println("Есть ли планшет? "
-                + basket.containsProduct("Планшет"));
+        System.out.println("Есть ли планшет? " + basket.containsProduct("Планшет"));
 
         // 7. Очистка корзины
         basket.clearBasket();
@@ -52,8 +49,7 @@ public class App {
         basket.printBasket();
 
         // 9. Стоимость пустой корзины
-        System.out.println("\nСтоимость пустой корзины: "
-                + basket.getTotalPrice());
+        System.out.println("\nСтоимость пустой корзины: " + basket.getTotalPrice());
 
         // 10. Поиск продукта в пустой корзине
         System.out.println("Есть ли телефон? "
