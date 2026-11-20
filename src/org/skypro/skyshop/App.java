@@ -1,58 +1,74 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.basket.ProductBasket;
 
 public class App {
 
     public static void main(String[] args) {
 
-        // Создаём продукты
-        Product product1 = new Product("Телефон", 50000);
-        Product product2 = new Product("Ноутбук", 80000);
-        Product product3 = new Product("Наушники", 5000);
-        Product product4 = new Product("Мышка", 2000);
-        Product product5 = new Product("Клавиатура", 4000);
-        Product product6 = new Product("Монитор", 25000);
+        // Создаём обычные товары
+        Product phone = new SimpleProduct("Телефон", 50000);
+        Product laptop = new SimpleProduct("Ноутбук", 80000);
+
+        // Создаём товары со скидкой
+        Product headphones = new DiscountedProduct(
+                "Наушники", 5000, 20
+        );
+
+        Product mouse = new DiscountedProduct(
+                "Мышка", 2000, 10
+        );
+
+        // Создаём товар с фиксированной ценой
+        Product keyboard = new FixPriceProduct("Клавиатура");
 
         // Создаём корзину
         ProductBasket basket = new ProductBasket();
 
-        // 1. Добавление продуктов
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(product5);
+        // Добавляем товары
+        basket.addProduct(phone);
+        basket.addProduct(laptop);
+        basket.addProduct(headphones);
+        basket.addProduct(mouse);
+        basket.addProduct(keyboard);
 
-        // 2. Попытка добавить шестой продукт
-        basket.addProduct(product6);
+        // Проверяем заполнение корзины
+        basket.addProduct(new SimpleProduct("Монитор", 25000));
 
-        // 3. Печать содержимого корзины
+        // Печатаем корзину
         System.out.println("\nСодержимое корзины:");
         basket.printBasket();
 
-        // 4. Получение стоимости корзины
-        System.out.println("\nСтоимость корзины: " + basket.getTotalPrice());
+        // Проверяем общую стоимость
+        System.out.println("\nСтоимость корзины: "
+                + basket.getTotalPrice());
 
-        // 5. Поиск существующего продукта
-        System.out.println("\nЕсть ли телефон? " + basket.containsProduct("Телефон"));
+        // Проверяем специальные товары
+        System.out.println("Специальных товаров: "
+                + basket.getSpecialProductsCount());
 
-        // 6. Поиск отсутствующего продукта
-        System.out.println("Есть ли планшет? " + basket.containsProduct("Планшет"));
+        // Проверяем поиск
+        System.out.println("\nЕсть ли телефон? "
+                + basket.containsProduct("Телефон"));
 
-        // 7. Очистка корзины
+        System.out.println("Есть ли планшет? "
+                + basket.containsProduct("Планшет"));
+
+        // Очищаем корзину
         basket.clearBasket();
 
-        // 8. Печать пустой корзины
+        // Проверяем пустую корзину
         System.out.println("\nПосле очистки:");
         basket.printBasket();
 
-        // 9. Стоимость пустой корзины
-        System.out.println("\nСтоимость пустой корзины: " + basket.getTotalPrice());
+        System.out.println("Стоимость пустой корзины: "
+                + basket.getTotalPrice());
 
-        // 10. Поиск продукта в пустой корзине
-        System.out.println("Есть ли телефон? "
-                + basket.containsProduct("Телефон"));
+        System.out.println("Специальных товаров: "
+                + basket.getSpecialProductsCount());
     }
 }
