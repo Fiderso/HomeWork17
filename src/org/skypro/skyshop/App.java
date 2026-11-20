@@ -4,71 +4,89 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+
+import org.skypro.skyshop.article.Article;
+
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+
+import java.util.Arrays;
 
 public class App {
 
     public static void main(String[] args) {
 
-        // Создаём обычные товары
+        // Создаём товары
         Product phone = new SimpleProduct("Телефон", 50000);
         Product laptop = new SimpleProduct("Ноутбук", 80000);
-
-        // Создаём товары со скидкой
         Product headphones = new DiscountedProduct(
                 "Наушники", 5000, 20
         );
-
         Product mouse = new DiscountedProduct(
                 "Мышка", 2000, 10
         );
-
-        // Создаём товар с фиксированной ценой
         Product keyboard = new FixPriceProduct("Клавиатура");
 
         // Создаём корзину
         ProductBasket basket = new ProductBasket();
 
-        // Добавляем товары
         basket.addProduct(phone);
         basket.addProduct(laptop);
         basket.addProduct(headphones);
         basket.addProduct(mouse);
         basket.addProduct(keyboard);
 
-        // Проверяем заполнение корзины
-        basket.addProduct(new SimpleProduct("Монитор", 25000));
-
-        // Печатаем корзину
-        System.out.println("\nСодержимое корзины:");
+        // Демонстрация корзины
+        System.out.println("Содержимое корзины:");
         basket.printBasket();
 
-        // Проверяем общую стоимость
-        System.out.println("\nСтоимость корзины: "
-                + basket.getTotalPrice());
+        // Создаём статьи
+        Article article1 = new Article(
+                "Как выбрать телефон",
+                "При выборе телефона обратите внимание на процессор и камеру."
+        );
 
-        // Проверяем специальные товары
-        System.out.println("Специальных товаров: "
-                + basket.getSpecialProductsCount());
+        Article article2 = new Article(
+                "Как выбрать ноутбук",
+                "Ноутбук должен соответствовать вашим задачам."
+        );
 
-        // Проверяем поиск
-        System.out.println("\nЕсть ли телефон? "
-                + basket.containsProduct("Телефон"));
+        Article article3 = new Article(
+                "Обзор наушников",
+                "Наушники бывают проводные и беспроводные."
+        );
 
-        System.out.println("Есть ли планшет? "
-                + basket.containsProduct("Планшет"));
+        // Создаём поисковый движок
+        SearchEngine searchEngine = new SearchEngine(10);
 
-        // Очищаем корзину
-        basket.clearBasket();
+        // Добавляем товары
+        searchEngine.add(phone);
+        searchEngine.add(laptop);
+        searchEngine.add(headphones);
+        searchEngine.add(mouse);
+        searchEngine.add(keyboard);
 
-        // Проверяем пустую корзину
-        System.out.println("\nПосле очистки:");
-        basket.printBasket();
+        // Добавляем статьи
+        searchEngine.add(article1);
+        searchEngine.add(article2);
+        searchEngine.add(article3);
 
-        System.out.println("Стоимость пустой корзины: "
-                + basket.getTotalPrice());
+        // Демонстрация поиска
+        System.out.println("\nПоиск: телефон");
+        Searchable[] result1 = searchEngine.search("телефон");
+        System.out.println(Arrays.toString(result1));
 
-        System.out.println("Специальных товаров: "
-                + basket.getSpecialProductsCount());
+        System.out.println("\nПоиск: ноутбук");
+        Searchable[] result2 = searchEngine.search("ноутбук");
+        System.out.println(Arrays.toString(result2));
+
+        System.out.println("\nПоиск: наушники");
+        Searchable[] result3 = searchEngine.search("наушники");
+        System.out.println(Arrays.toString(result3));
+
+        System.out.println("\nПоиск: компьютер");
+        Searchable[] result4 = searchEngine.search("компьютер");
+        System.out.println(Arrays.toString(result4));
     }
 }
